@@ -135,9 +135,9 @@ public class InputManager : MonoBehaviour
         return Mathf.Abs(fingerDown.x - fingerUp.x);
     }
 
-    void OnSwipe(float moveAmount) 
+    void OnSwipe(float moveAmount)
     {
-        OnMovementInput?.Invoke(moveAmount * Time.deltaTime);
+        OnMovementInput?.Invoke(moveAmount * Time.deltaTime * 0.2f);
     }
     public void EnableInput(bool enable)
     {

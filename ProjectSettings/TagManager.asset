@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - GroundCheck
+  - Ground
+  - Collectible
+  - FinishLine
   - 
   - 
   - 
