@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
-    public static event Action OnLevelFinished;
+    public static event Action OnFinishLine;
 
     private void OnTriggerEnter(Collider other)
     {
-        OnLevelFinished?.Invoke();
+        OnFinishLine?.Invoke();
     }
 }

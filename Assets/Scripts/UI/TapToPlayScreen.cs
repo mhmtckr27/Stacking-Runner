@@ -6,22 +6,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TapToPlayScreen : MonoBehaviour, IPointerDownHandler
+public class TapToPlayScreen : ScreenBase, IPointerDownHandler
 {
     [SerializeField] private Text stackUpgradeAmountText;
     [SerializeField] private Text stackUpgradePriceText;
-    [SerializeField] private GameObject levels;
-    [SerializeField] private Slider levelsSlider;
 
     public static event Action OnTapToPlay;
-
-    private List<LevelUI> levelUIs;
-
-    private void Awake()
-    {
-        levelUIs = new List<LevelUI>();
-        levelUIs.AddRange(levels.GetComponentsInChildren<LevelUI>());
-    }
 
     private void Start()
     {
@@ -45,19 +35,7 @@ public class TapToPlayScreen : MonoBehaviour, IPointerDownHandler
         stackUpgradePriceText.text = newStackUpgradeData.Price.ToString();
     }
 
-    private void UpdateLevelsBar(int currentLevel)
-    {
-        int levelsBarStart = currentLevel / 5 * 5 + 1;
-        for(int i = 0; i < levelUIs.Count; i++)
-        {
-            int level = levelsBarStart + i;
-            LevelState state = (currentLevel < level) ? LevelState.NotAchieved : ((currentLevel > level) ? LevelState.Achieved : LevelState.Current);
-            levelUIs[i].UpdateLevel(level, state);
-        }
-        levelsSlider.value = (currentLevel - levelsBarStart) * ((float)1 / (levels.transform.childCount - 1));
-    }
-
-    public void ToggleVisibility(bool enable)
+    public override void ToggleVisibility(bool enable)
     {
         gameObject.SetActive(enable);
         if (enable)

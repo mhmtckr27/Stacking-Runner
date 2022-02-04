@@ -2,22 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> dontDestroyOnLoadObjects;
     [SerializeField] private List<StackUpgrade> stackUpgrades;
     [SerializeField] private List<int> platformCounts;
     [SerializeField] private GameObject platformPrefab;
+    [SerializeField] private GameObject nonCollidingPlatformPrefab;
     [SerializeField] private GameObject finishLinePrefab;
+    [SerializeField] private int currentLevelStartValueForDebugDeleteLater;
 
     private List<Platform> currentLevelPlatforms;
     public float levelStartPointZ;
     public float levelEndPointZ;
 
-
+    private int highScore;
+    private int finalScoreThisLevel;
     private int startStackAmount;
     private bool isLevelStarted;
-
+    public int collectedGoldThisLevel;
+    private int collectedDiamondThisLevel;
     public int CurrentLevel { get; private set; }
 
     private int currentStackUpgradeIndex;
@@ -44,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     public event Action<StackUpgrade> OnCurrentStackUpgradeIndexChange;
     public event Action<int> OnGoldChange;
+    public event Action<bool> IsNewHighScore;
 
     private static GameManager instance;
     public static GameManager Instance { get => instance; private set => instance = value; }
@@ -59,7 +66,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        CurrentLevel = 1;
+        DontDestroyOnLoad(gameObject);
+
+        CurrentLevel = currentLevelStartValueForDebugDeleteLater;
         currentLevelPlatforms = new List<Platform>();
         SpawnPlatforms();
     }
@@ -67,22 +76,52 @@ public class GameManager : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         CurrentLevel = level + 1;
+        collectedGoldThisLevel = 0;
+        collectedDiamondThisLevel = startStackAmount;
+        PlayerController.Instance.transform.position = Vector3.zero;
         SpawnPlatforms();
     }
 
     private void Start()
     {
+        foreach (GameObject gameObject in dontDestroyOnLoadObjects)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         TapToPlayScreen.OnTapToPlay += StartLevel;
-        FinishLine.OnLevelFinished += FinishLevel;
+        FinishLine.OnFinishLine += StopLevel;
+        LevelEndScreen.Instance.OnTapToContinue += LevelEndScreen_OnTapToContinue;
         Invoke(nameof(LateStart), 0.1f);
     }
 
-    private void FinishLevel()
+    private void OnDestroy()
+    {
+        TapToPlayScreen.OnTapToPlay -= StartLevel;
+        FinishLine.OnFinishLine -= StopLevel;
+        LevelEndScreen.Instance.OnTapToContinue -= LevelEndScreen_OnTapToContinue;
+    }
+
+    private void LevelEndScreen_OnTapToContinue()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    private void StopLevel()
     {
         if (isLevelStarted == true)
         {
             PlayerController.Instance.StartRunning(false);
             isLevelStarted = false;
+            GoldAmount += collectedGoldThisLevel;
+
+            //TODO: add a score bonus multiplier or sth idk.
+            finalScoreThisLevel = collectedDiamondThisLevel * 1;
+            IsNewHighScore?.Invoke(highScore < finalScoreThisLevel);
+            if (highScore < finalScoreThisLevel)
+            {
+                highScore = finalScoreThisLevel;
+            }
         }
     }
 
@@ -90,11 +129,6 @@ public class GameManager : MonoBehaviour
     {
         GoldAmount = 500;
         CurrentStackUpgradeIndex = 0;
-    }
-
-    private void OnDestroy()
-    {
-        TapToPlayScreen.OnTapToPlay -= StartLevel;
     }
 
     private void StartLevel()
@@ -124,11 +158,16 @@ public class GameManager : MonoBehaviour
     {
         currentLevelPlatforms.Clear();
         BoxCollider platformCollider = platformPrefab.GetComponentInChildren<BoxCollider>();
-        for(int i = 0; i < platformCounts[CurrentLevel]; i++)
+
+        Instantiate(nonCollidingPlatformPrefab, new Vector3(0, 0, -1 * platformCollider.size.z), Quaternion.identity);
+
+        int platformCount = (platformCounts.Count > CurrentLevel) ? platformCounts[CurrentLevel] : 1; 
+
+        for(int i = 0; i < platformCount; i++)
         {
             currentLevelPlatforms.Add(Instantiate(platformPrefab, new Vector3(0, 0, i * platformCollider.size.z), Quaternion.identity).GetComponent<Platform>());
         }
-
+        
         levelStartPointZ = currentLevelPlatforms[0].boxCollider.bounds.min.z;
         levelEndPointZ = currentLevelPlatforms[currentLevelPlatforms.Count - 1].boxCollider.bounds.max.z;
         Vector3 finishLinePos = currentLevelPlatforms[currentLevelPlatforms.Count - 1].transform.position;

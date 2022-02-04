@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelProgressBar : MonoBehaviour
+public class InGameScreen : ScreenBase
 {
     [SerializeField] private Slider progressBar;
+    [SerializeField] private LevelUI levelUI;
 
     private void Start()
     {
-        TapToPlayScreen.OnTapToPlay += OnGameStart;
+        TapToPlayScreen.OnTapToPlay += OnLevelStart;
     }
 
     private void OnDestroy()
     {
-        TapToPlayScreen.OnTapToPlay -= OnGameStart;
+        TapToPlayScreen.OnTapToPlay -= OnLevelStart;
     }
 
-    private void OnGameStart()
+    private void OnLevelStart()
     {
-        InvokeRepeating(nameof(UpdateProgressBar), 0, 0.1f);
+        levelUI.UpdateLevelUI(GameManager.Instance.CurrentLevel);
+        InvokeRepeating(nameof(UpdateProgressBar), 0, 0.02f);
     }
 
     private void UpdateProgressBar()

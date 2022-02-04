@@ -10,37 +10,24 @@ public class LevelUI : MonoBehaviour
     [SerializeField] private Text levelTextShadow;
     [SerializeField] private Image levelPanelBackground;
 
-    public void UpdateLevel(int level, LevelState levelState)
+    //depending on the params, correct function gets called
+    public void UpdateLevelUI(int newLevel, LevelState state)
     {
+        UpdateLevelUI(newLevel);
+        UpdateLevelUI(state);
+    }
 
-        switch (levelState)
-        {
-            case LevelState.NotAchieved:
-                levelText.text = level.ToString();
-                levelTextShadow.text = level.ToString();
-                levelText.color = Color.black;
-                levelTextShadow.color = Color.gray;
-                levelPanelBackground.color = new Color(.85f, .85f, .85f);
-                rect.localScale = Vector2.one;
-                break;
-            case LevelState.Achieved:
-                levelText.text = level.ToString();
-                levelTextShadow.text = level.ToString();
-                levelText.color = Color.white;
-                levelTextShadow.color = Color.black;
-                levelPanelBackground.color = new Color(0, 0.8f, 0);
-                rect.localScale = Vector2.one;
-                break;
-            case LevelState.Current:
-                levelText.text = level.ToString();
-                levelTextShadow.text = level.ToString();
-                levelText.color = Color.black;
-                levelTextShadow.color = Color.gray;
-                levelPanelBackground.color = Color.white;
-                rect.localScale = 1.2f * Vector2.one;
-                break;
-            default:
-                break;
-        }
+    public void UpdateLevelUI(int newLevel)
+    {
+        levelText.text = newLevel.ToString();
+        levelTextShadow.text = newLevel.ToString();
+    }
+
+    public void UpdateLevelUI(LevelState state)
+    {
+        levelText.color = UIManager.Instance.levelUIDataDictionary[state].textColor;
+        levelTextShadow.color = UIManager.Instance.levelUIDataDictionary[state].textShadowColor;
+        levelPanelBackground.color = UIManager.Instance.levelUIDataDictionary[state].panelBackgroundColor;
+        rect.localScale = UIManager.Instance.levelUIDataDictionary[state].panelScale;
     }
 }
