@@ -43,6 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a416d67f3c51b1e44b327adb7d7577b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoadObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   stackUpgrades:
   - UpgradeAmount: 5
     Price: 25
@@ -50,8 +61,11 @@ MonoBehaviour:
     Price: 100
   - UpgradeAmount: 10
     Price: 125
-  platformCounts: 000000000a000000
+  platformCounts: 000000000100000002000000
   platformPrefab: {fileID: 2017618889913456586, guid: 74e22f84f318fa54093a1aab452f160d, type: 3}
-  finishLinePrefab: {fileID: 0}
+  nonCollidingPlatformPrefab: {fileID: 2017618889913456586, guid: fdd97ae414743a74cbfbebe9af8086fd, type: 3}
+  finishLinePrefab: {fileID: 7594980204894653313, guid: a577374839df23e42840df72844f1c78, type: 3}
+  currentLevelStartValueForDebugDeleteLater: 1
   levelStartPointZ: 0
   levelEndPointZ: 0
+  collectedGoldThisLevel: 2123

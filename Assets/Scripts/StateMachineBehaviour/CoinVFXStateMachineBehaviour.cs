@@ -1,16 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : StateMachineBehaviour
+public class CoinVFXStateMachineBehaviour : StateMachineBehaviour
 {
-    private GameObject coinBurstVFX;
-    // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    [SerializeField] private CoinVFXType vfxType;
+    public static event Action<CoinVFXType> OnPlayCoinVFX;
 
+    // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+        OnPlayCoinVFX?.Invoke(vfxType);
+    }
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -18,13 +21,10 @@ public class Test : StateMachineBehaviour
     //}
 
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (stateInfo.IsName("ScorePanelSlideIn"))
-        {
-            FindObjectOfType<CoinBurstVFX>().gameObject.SetActive(true);
-        }
-    }
+    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //
+    //}
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

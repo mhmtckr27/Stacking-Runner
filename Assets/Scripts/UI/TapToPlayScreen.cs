@@ -13,8 +13,9 @@ public class TapToPlayScreen : ScreenBase, IPointerDownHandler
 
     public static event Action OnTapToPlay;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         GameManager.Instance.OnCurrentStackUpgradeIndexChange += UpdateUpgradeButton;
     }
 
@@ -40,7 +41,7 @@ public class TapToPlayScreen : ScreenBase, IPointerDownHandler
         gameObject.SetActive(enable);
         if (enable)
         {
-            UpdateLevelsBar(GameManager.Instance.CurrentLevel);
+            //UpdateLevelsBar(GameManager.Instance.CurrentLevel);
         }
     }
 }

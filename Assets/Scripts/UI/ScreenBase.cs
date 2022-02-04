@@ -6,26 +6,30 @@ using UnityEngine.UI;
 public class ScreenBase : MonoBehaviour
 {
     [SerializeField] private ScreenType screenType;
-    [SerializeField] private GameObject levelsObject;
+    [SerializeField] protected GameObject levelsPanel;
     [SerializeField] protected Slider levelsSlider;
 
     protected List<LevelUI> levelUIs;
 
+
     protected virtual void Awake()
     {
-        if(screenType != ScreenType.InGame)
+
+    }
+    protected virtual void Start()
+    {
+        if (screenType != ScreenType.InGame)
         {
             levelUIs = new List<LevelUI>();
-            levelUIs.AddRange(levelsObject.GetComponentsInChildren<LevelUI>());
+            levelUIs.AddRange(levelsPanel.GetComponentsInChildren<LevelUI>());
         }
     }
-
     public virtual void ToggleVisibility(bool show)
     {
         gameObject.SetActive(show);
     }
 
-    protected virtual void UpdateLevelsBar(int currentLevel, float updateInTime = 0.01f)
+    public virtual void UpdateLevelsBar(int currentLevel, float updateInTime = 0f)
     {
         //some rocket science to correctly show levels bar UI
         int levelsBarStart = (currentLevel % 5 == 0) ? (currentLevel - 4) : (currentLevel / 5 * 5 + 1);
@@ -40,7 +44,14 @@ public class ScreenBase : MonoBehaviour
                 currentLevelIndex = i;
             }
         }
-        StartCoroutine(UpdateLevelsSliderAndCurrentLevel(currentLevel, levelsBarStart, currentLevelIndex, updateInTime));
+        if(updateInTime == 0)
+        {
+            UpdateLevelsBarImmediate(currentLevel, currentLevelIndex, levelsBarStart);
+        }
+        else
+        {
+            StartCoroutine(UpdateLevelsSliderAndCurrentLevel(currentLevel, levelsBarStart, currentLevelIndex, updateInTime));
+        }
     }
 
     protected IEnumerator UpdateLevelsSliderAndCurrentLevel(int currentLevel, int levelsBarStart, int currentLevelUIIndex, float updateTime)
@@ -49,9 +60,19 @@ public class ScreenBase : MonoBehaviour
         levelUIs[currentLevelUIIndex].UpdateLevelUI(LevelState.Current);
     }
 
+    protected void UpdateLevelsBarImmediate(int currentLevel, int currentLevelIndex, int levelsBarStart)
+    {
+        float sliderValueDifBetweenLevels = ((float)1 / (levelUIs.Count - 1));
+        levelsSlider.value = (currentLevel - levelsBarStart) * sliderValueDifBetweenLevels;
+        for(int i = 0; i < levelUIs.Count; i++)
+        {
+            levelUIs[i].UpdateLevelUI(i < currentLevelIndex ? LevelState.Achieved : (i > currentLevelIndex ? LevelState.NotAchieved : LevelState.Current));
+        }
+    }
+
     protected IEnumerator UpdateLevelsSliderRoutine(int currentLevel, int levelsBarStart, float updateTime)
     {
-        float sliderValueDifBetweenLevels = ((float)1 / (levelsObject.transform.childCount - 1));
+        float sliderValueDifBetweenLevels = ((float)1 / (levelUIs.Count - 1));
         float targetSliderValue = (currentLevel - levelsBarStart) * sliderValueDifBetweenLevels;
         float elapsedTime = 0f;
         int sliderInLevelIndexArea = 0;

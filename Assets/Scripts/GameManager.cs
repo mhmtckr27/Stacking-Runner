@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject nonCollidingPlatformPrefab;
     [SerializeField] private GameObject finishLinePrefab;
     [SerializeField] private int currentLevelStartValueForDebugDeleteLater;
+    [SerializeField] private int maxStackLimit;
 
     private List<Platform> currentLevelPlatforms;
     public float levelStartPointZ;
@@ -50,11 +51,11 @@ public class GameManager : MonoBehaviour
 
     public event Action<StackUpgrade> OnCurrentStackUpgradeIndexChange;
     public event Action<int> OnGoldChange;
-    public event Action<bool> IsNewHighScore;
+    public event Action<bool, int, int> IsNewHighScore;
 
     private static GameManager instance;
     public static GameManager Instance { get => instance; private set => instance = value; }
-    
+
     private void Awake()
     {
         if(Instance == null)
@@ -67,17 +68,19 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
 
-        CurrentLevel = currentLevelStartValueForDebugDeleteLater;
-        currentLevelPlatforms = new List<Platform>();
-        SpawnPlatforms();
+    private void UpdateCollectedDiamond(int amountToAdd)
+    {
+        collectedDiamondThisLevel = Mathf.Clamp(collectedDiamondThisLevel + amountToAdd, 0, maxStackLimit);
+        PlayerController.Instance.animator.SetBool("IsStackEmpty", collectedDiamondThisLevel == 0);
     }
 
     private void OnLevelWasLoaded(int level)
     {
         CurrentLevel = level + 1;
         collectedGoldThisLevel = 0;
-        collectedDiamondThisLevel = startStackAmount;
+        collectedDiamondThisLevel = 0;
         PlayerController.Instance.transform.position = Vector3.zero;
         SpawnPlatforms();
     }
@@ -92,7 +95,14 @@ public class GameManager : MonoBehaviour
         TapToPlayScreen.OnTapToPlay += StartLevel;
         FinishLine.OnFinishLine += StopLevel;
         LevelEndScreen.Instance.OnTapToContinue += LevelEndScreen_OnTapToContinue;
-        Invoke(nameof(LateStart), 0.1f);
+        Diamond.OnDiamondCollected += UpdateCollectedDiamond;
+
+        LoadGameData();
+        SpawnPlatforms();
+        if (CurrentLevel > 1)
+        {
+            SceneManager.LoadSceneAsync(CurrentLevel - 1);
+        }
     }
 
     private void OnDestroy()
@@ -100,6 +110,7 @@ public class GameManager : MonoBehaviour
         TapToPlayScreen.OnTapToPlay -= StartLevel;
         FinishLine.OnFinishLine -= StopLevel;
         LevelEndScreen.Instance.OnTapToContinue -= LevelEndScreen_OnTapToContinue;
+        Diamond.OnDiamondCollected -= UpdateCollectedDiamond;
     }
 
     private void LevelEndScreen_OnTapToContinue()
@@ -113,11 +124,11 @@ public class GameManager : MonoBehaviour
         {
             PlayerController.Instance.StartRunning(false);
             isLevelStarted = false;
-            GoldAmount += collectedGoldThisLevel;
 
             //TODO: add a score bonus multiplier or sth idk.
             finalScoreThisLevel = collectedDiamondThisLevel * 1;
-            IsNewHighScore?.Invoke(highScore < finalScoreThisLevel);
+            goldAmount += collectedGoldThisLevel + finalScoreThisLevel;
+            IsNewHighScore?.Invoke(highScore < finalScoreThisLevel, finalScoreThisLevel, highScore);
             if (highScore < finalScoreThisLevel)
             {
                 highScore = finalScoreThisLevel;
@@ -125,16 +136,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LateStart()
-    {
-        GoldAmount = 500;
-        CurrentStackUpgradeIndex = 0;
-    }
-
     private void StartLevel()
     {
         if (isLevelStarted == false)
         {
+            UpdateCollectedDiamond(startStackAmount);
             PlayerController.Instance.StartRunning(true);
             isLevelStarted = true;
         }
@@ -146,17 +152,13 @@ public class GameManager : MonoBehaviour
         {
             startStackAmount += stackUpgrades[currentStackUpgradeIndex].UpgradeAmount;
             GoldAmount -= stackUpgrades[currentStackUpgradeIndex].Price;
-        }
-
-        if(CurrentStackUpgradeIndex < stackUpgrades.Count - 1)
-        {
-            CurrentStackUpgradeIndex++;
+            CurrentStackUpgradeIndex = Mathf.Clamp(CurrentStackUpgradeIndex + 1, 0, stackUpgrades.Count - 1);
         }
     }
 
     private void SpawnPlatforms()
     {
-        currentLevelPlatforms.Clear();
+        currentLevelPlatforms = new List<Platform>();
         BoxCollider platformCollider = platformPrefab.GetComponentInChildren<BoxCollider>();
 
         Instantiate(nonCollidingPlatformPrefab, new Vector3(0, 0, -1 * platformCollider.size.z), Quaternion.identity);
@@ -169,10 +171,31 @@ public class GameManager : MonoBehaviour
         }
         
         levelStartPointZ = currentLevelPlatforms[0].boxCollider.bounds.min.z;
-        levelEndPointZ = currentLevelPlatforms[currentLevelPlatforms.Count - 1].boxCollider.bounds.max.z;
+        levelEndPointZ = currentLevelPlatforms[currentLevelPlatforms.Count - 1].boxCollider.bounds.max.z + 0.25f;
         Vector3 finishLinePos = currentLevelPlatforms[currentLevelPlatforms.Count - 1].transform.position;
         finishLinePos.z = levelEndPointZ;
         Instantiate(finishLinePrefab, finishLinePos, Quaternion.identity);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGameData();
+    }
+
+    private void SaveGameData()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
+        PlayerPrefs.SetInt("GoldAmount", GoldAmount);
+        PlayerPrefs.SetInt("StartStackAmount", startStackAmount);
+        PlayerPrefs.SetInt("CurrentUpgradeIndex", CurrentStackUpgradeIndex);
+    }
+
+    private void LoadGameData()
+    {
+        CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        GoldAmount = PlayerPrefs.GetInt("GoldAmount", 0);
+        startStackAmount = PlayerPrefs.GetInt("StartStackAmount", 0);
+        CurrentStackUpgradeIndex = PlayerPrefs.GetInt("CurrentUpgradeIndex", 0);
     }
 }
 

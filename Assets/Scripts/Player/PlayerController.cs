@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float runSpeed = 3;
     private Rigidbody rb;
-    private Animator animator;
+    public Animator animator;
 
     private static PlayerController instance;
     public static PlayerController Instance { get => instance; private set => instance = value; }
@@ -39,18 +39,29 @@ public class PlayerController : MonoBehaviour
     {
         InputManager.Instance.EnableInput(start);
         SetMoveSpeed(start ? runSpeed : 0);
+        if (!start)
+        {
+            animator.SetTrigger("Dance");
+        }
     }
 
     private void OnEnable()
     {
         InputManager.Instance.OnMovementInput += OnMovementInput;
         GroundCheck.OnCurrentPlatformChange += GroundCheck_OnCurrentPlatformChange;
+        LevelEndScreen.Instance.OnTapToContinue += Instance_OnTapToContinue;
+    }
+
+    private void Instance_OnTapToContinue()
+    {
+        animator.SetTrigger("StopDance");
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnMovementInput -= OnMovementInput;
         GroundCheck.OnCurrentPlatformChange -= GroundCheck_OnCurrentPlatformChange;
+        LevelEndScreen.Instance.OnTapToContinue -= Instance_OnTapToContinue;
     }
 
     private void SetMoveSpeed(float speed)

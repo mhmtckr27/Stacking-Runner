@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TapToPlayScreen tapToPlayScreen;
     [SerializeField] private InGameScreen inGameScreen;
     [SerializeField] private LevelEndScreen levelEndScreen;
+    [SerializeField] private GameObject levelsPanel;
 
     Dictionary<ScreenType, ScreenBase> screens;
     public Dictionary<LevelState, LevelUIData> levelUIDataDictionary;
@@ -28,9 +29,6 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        PopulateScreensDictionary();
-        PopulateLevelUIDataDictionary();
     }
 
     private void PopulateLevelUIDataDictionary()
@@ -40,39 +38,48 @@ public class UIManager : MonoBehaviour
         levelUIDataDictionary.Add(LevelState.Achieved, achievedLevelUIData);
         levelUIDataDictionary.Add(LevelState.Current, currentLevelUIData);
     }
-
-    private void Start()
+    private void OnEnable()
     {
         GameManager.Instance.OnGoldChange += UpdateGoldText;
         TapToPlayScreen.OnTapToPlay += OnLevelStarted;
         FinishLine.OnFinishLine += OnFinishLine;
         levelEndScreen.OnTapToContinue += LevelEndScreen_OnTapToContinue;
+        UpdateGoldTextStateMachineBehaviour.OnUpdateGoldText += UpdateGoldTextStateMachineBehaviour_OnUpdateGoldText;
+    }
 
+    private void Start()
+    {
+        PopulateScreensDictionary();
+        PopulateLevelUIDataDictionary();
+
+
+
+        tapToPlayScreen.UpdateLevelsBar(GameManager.Instance.CurrentLevel);
         ToggleScreens(ScreenType.TapToPlay);
     }
 
-    private void OnDestroy()
+    private void UpdateGoldTextStateMachineBehaviour_OnUpdateGoldText()
+    {
+        StartCoroutine(UpdateGoldTextRoutine(GameManager.Instance.GoldAmount));
+    }
+
+    private void OnDisable()
     {
         GameManager.Instance.OnGoldChange -= UpdateGoldText;
         TapToPlayScreen.OnTapToPlay -= OnLevelStarted;
         FinishLine.OnFinishLine -= OnFinishLine;
         levelEndScreen.OnTapToContinue -= LevelEndScreen_OnTapToContinue;
+        UpdateGoldTextStateMachineBehaviour.OnUpdateGoldText -= UpdateGoldTextStateMachineBehaviour_OnUpdateGoldText;
     }
 
     private void LevelEndScreen_OnTapToContinue()
     {
-        ToggleScreens(ScreenType.TapToPlay);
+        goldAmountText.text = GameManager.Instance.GoldAmount.ToString();
     }
 
     private void OnFinishLine()
     {
         ToggleScreens(ScreenType.LevelEnd);
-        Invoke(nameof(SetTempGoldAmountText), 0.01f);
-    }
-
-    private void SetTempGoldAmountText()
-    {
-        goldAmountText.text = (GameManager.Instance.GoldAmount - GameManager.Instance.collectedGoldThisLevel).ToString();
     }
 
     private void PopulateScreensDictionary()
@@ -88,6 +95,10 @@ public class UIManager : MonoBehaviour
         ToggleScreens(ScreenType.InGame);
     }
 
+    private void OnLevelWasLoaded(int level)
+    {
+        ToggleScreens(ScreenType.TapToPlay);
+    }
 
     private void UpdateGoldText(int newGoldAmount)
     {
@@ -151,7 +162,8 @@ public class UIManager : MonoBehaviour
     {
         foreach (ScreenType screenType in screens.Keys)
         {
-            screens[screenType].ToggleVisibility(screenType == screenTypeToShow);
+            levelsPanel.SetActive((screenTypeToShow == ScreenType.TapToPlay));
+            screens[screenType].ToggleVisibility((screenType == screenTypeToShow) || (screenTypeToShow == ScreenType.LevelEnd && screenType == ScreenType.InGame));
         }
     }
 }
