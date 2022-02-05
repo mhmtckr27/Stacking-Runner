@@ -11,5 +11,6 @@ public interface ICollectible
 public enum CollectibleType
 {
     Diamond,
-    Gold
+    Gold,
+    Obstacle
 }

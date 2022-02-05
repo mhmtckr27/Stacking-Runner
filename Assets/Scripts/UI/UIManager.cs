@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private InGameScreen inGameScreen;
     [SerializeField] private LevelEndScreen levelEndScreen;
     [SerializeField] private GameObject levelsPanel;
+    [SerializeField] private AudioSource audioSource;
 
     Dictionary<ScreenType, ScreenBase> screens;
     public Dictionary<LevelState, LevelUIData> levelUIDataDictionary;
@@ -51,8 +52,6 @@ public class UIManager : MonoBehaviour
     {
         PopulateScreensDictionary();
         PopulateLevelUIDataDictionary();
-
-
 
         tapToPlayScreen.UpdateLevelsBar(GameManager.Instance.CurrentLevel);
         ToggleScreens(ScreenType.TapToPlay);
@@ -125,7 +124,8 @@ public class UIManager : MonoBehaviour
             goldAmountText.text = goldAmountText.text.Insert(0, empty);
         }
 
-        for(int i = 0; i < scoreDigits.Count; i++)
+        audioSource.Play();
+        for (int i = 0; i < scoreDigits.Count; i++)
         {
             StartCoroutine(UpdateGoldTextDigit(scoreDigits.Count - 1 - i, scoreDigits[i]));
             yield return new WaitForSeconds(0.1f);

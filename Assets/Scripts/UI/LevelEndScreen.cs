@@ -18,6 +18,7 @@ public class LevelEndScreen : ScreenBase, IPointerClickHandler
     [SerializeField] private GameObject tapToContinue;
     [SerializeField] private ParticleSystem coinBurstVFX;
     [SerializeField] private ParticleSystem coinScoreVFX;
+    [SerializeField] private List<ParticleSystem> colorfulVFXs;
 
     public event Action OnTapToContinue;
 
@@ -53,6 +54,10 @@ public class LevelEndScreen : ScreenBase, IPointerClickHandler
         InGameScreen.Instance.currentLevelPanel.SetActive(false);
         levelsPanel.SetActive(true);
         StartCoroutine(UpdateLevelsProgressBarRoutine());
+        foreach (ParticleSystem colorfulVFX in colorfulVFXs)
+        {
+            colorfulVFX.Play();
+        }
     }
 
     private void ScoreBlendInStateMachineBehaviour_OnScoreBlendInStart()
@@ -101,6 +106,10 @@ public class LevelEndScreen : ScreenBase, IPointerClickHandler
     {
         StopAllCoroutines();
         scoreHorizontalLayout.SetActive(false);
+        foreach (ParticleSystem colorfulVFX in colorfulVFXs)
+        {
+            colorfulVFX.Stop();
+        }
         InGameScreen.Instance.currentLevelPanel.SetActive(true);
         UpdateLevelsBar(GameManager.Instance.CurrentLevel + 1);
         OnTapToContinue?.Invoke();

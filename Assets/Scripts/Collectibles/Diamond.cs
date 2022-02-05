@@ -5,19 +5,23 @@ using UnityEngine;
 
 public class Diamond : BaseCollectible
 {
+    [SerializeField] private Animator anim;
     public override CollectibleType collectibleType => CollectibleType.Diamond;
-
-    public static event Action<int> OnDiamondCollected;
 
     public override void GetCollected()
     {
+        base.GetCollected();
         Debug.Log(name + " : I am collected!");
-        OnDiamondCollected?.Invoke(1);
-        Destroy(gameObject);
+        anim.SetTrigger("OnCollected");
+        //Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+   /* private IEnumerator DestroyRoutine()
     {
-        GetCollected();
-    }
+        float elapsedTime = 0f;
+        while (elapsedTime < 0.5f)
+        {
+
+        }
+    }*/
 }

@@ -1,0 +1,151 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.8f1 (507919d4fff5) revision 5273881'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19043.1466; Version 2009; 64bit' Language: 'tr' Physical Memory: 16221 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+D:\Programlar\2020.3.8f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+D:/Projects/Unity Projects/Zerosum Case - Game Developer
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+63358
+Successfully changed project path to: D:/Projects/Unity Projects/Zerosum Case - Game Developer
+D:/Projects/Unity Projects/Zerosum Case - Game Developer
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 44.70 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.8f1 (507919d4fff5)
+[Subsystems] Discovering subsystems at path D:/Programlar/2020.3.8f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Projects/Unity Projects/Zerosum Case - Game Developer/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1650 Ti (ID=0x1f95)
+    Vendor:   
+    VRAM:     3962 MB
+    Driver:   30.0.14.7196
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Initialize mono
+Mono path[0] = 'D:/Programlar/2020.3.8f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Programlar/2020.3.8f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/Programlar/2020.3.8f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56520
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Programlar/2020.3.8f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001247 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 41.42 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in 16.653 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.004123 seconds.
+Begin MonoManager ReloadAssembly
+OnLevelWasLoaded was found on UIManager
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+OnLevelWasLoaded was found on GameManager
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 45.92 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.041 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.18 seconds
+Refreshing native plugins compatible for Editor in 0.47 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2737 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 131.5 MB.
+System memory in use after: 131.7 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 3184.
+Total: 2.200300 ms (FindLiveObjects: 0.250900 ms CreateObjectMapping: 0.148100 ms MarkObjects: 1.738100 ms  DeleteObjects: 0.062100 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Prefabs/Diamond.prefab
+  artifactKey: Guid(8ce4ac80549900749a4d95bb279bf187) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Diamond.prefab using Guid(8ce4ac80549900749a4d95bb279bf187) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e841b3d9bde4cc73b1d8cc602e6058d') in 0.205423 seconds
+  Import took 0.209495 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000274 seconds.
+  path: Assets/Prefabs/GameManager.prefab
+  artifactKey: Guid(99f7b194a13ad1049bd18f2760d13d6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/GameManager.prefab using Guid(99f7b194a13ad1049bd18f2760d13d6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a945fe7336b8a3080781df6f9ce702a4') in 0.017343 seconds
+  Import took 0.042025 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.139821 seconds.
+  path: Assets/Prefabs/Gold.prefab
+  artifactKey: Guid(5bdc7062403c6c440852260731e4dcf5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Gold.prefab using Guid(5bdc7062403c6c440852260731e4dcf5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7174cff3e42ef32208db18f479bf192a') in 0.033624 seconds
+  Import took 0.054545 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 28.853615 seconds.
+  path: Assets/Prefabs/Non-CollidingPlatform.prefab
+  artifactKey: Guid(fdd97ae414743a74cbfbebe9af8086fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Non-CollidingPlatform.prefab using Guid(fdd97ae414743a74cbfbebe9af8086fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1dda37d7758e686f6dbb518972db975e') in 0.018426 seconds
+  Import took 0.023277 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 20.453173 seconds.
+  path: Assets/Prefabs/UI/Canvas.prefab
+  artifactKey: Guid(97ff89a90e10cdd44aeded099423d86f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/UI/Canvas.prefab using Guid(97ff89a90e10cdd44aeded099423d86f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34c00fe385abb941ccfb7d01ea9536d3') in 0.169485 seconds
+  Import took 0.174977 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 13.887306 seconds.
+  path: Assets/Prefabs/UI/CoinKillVolume.prefab
+  artifactKey: Guid(db648b1cd498fe74ca27522fa20bef6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/UI/CoinKillVolume.prefab using Guid(db648b1cd498fe74ca27522fa20bef6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5870fcba1ac9681d88f8f66c9ed2136f') in 0.008021 seconds
+  Import took 0.012408 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003960 seconds.
+  path: Assets/Prefabs/UI/CoinKillVolume.prefab
+  artifactKey: Guid(db648b1cd498fe74ca27522fa20bef6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/UI/CoinKillVolume.prefab using Guid(db648b1cd498fe74ca27522fa20bef6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5870fcba1ac9681d88f8f66c9ed2136f') in 0.003351 seconds
+  Import took 0.007150 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.378347 seconds.
+  path: Assets/Prefabs/UI/CoinKillVolume.prefab
+  artifactKey: Guid(db648b1cd498fe74ca27522fa20bef6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/UI/CoinKillVolume.prefab using Guid(db648b1cd498fe74ca27522fa20bef6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd4d5d3fd7e4b9c37d0324c2f1e99b0c') in 0.021362 seconds
+  Import took 0.026554 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 26.365677 seconds.
+  path: Assets/Prefabs/Player.prefab
+  artifactKey: Guid(dfc85a75dbcef724a9849bbfa9511e98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Player.prefab using Guid(dfc85a75dbcef724a9849bbfa9511e98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16d43c6cb9b2ca16eaf42dff80c9509f') in 0.394239 seconds
+  Import took 0.399388 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

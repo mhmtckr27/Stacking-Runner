@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float runSpeed = 3;
+    [SerializeField] public float runSpeed = 3;
+    [SerializeField] public ParticleSystem plusOneVFX;
+
     private Rigidbody rb;
     public Animator animator;
 
@@ -26,7 +28,6 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponentInChildren<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
-
     }
 
     private void GroundCheck_OnCurrentPlatformChange(Collider newPlatformCollider)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class InGameScreen : ScreenBase
     [SerializeField] private Slider progressBar;
     [SerializeField] private LevelUI levelUI;
     [SerializeField] public GameObject currentLevelPanel;
+    [SerializeField] private Slider diamondProgress;
+    [SerializeField] private TextMeshProUGUI diamondText;
 
     bool shouldUpdateProgressBar;
 
@@ -31,6 +34,13 @@ public class InGameScreen : ScreenBase
         base.Start();
         TapToPlayScreen.OnTapToPlay += OnLevelStart;
         FinishLine.OnFinishLine += FinishLine_OnFinishLine;
+        GameManager.Instance.OnCollectedDiamondChange += Instance_OnCollectedDiamondChange;
+    }
+
+    private void Instance_OnCollectedDiamondChange(int collectedDiamond)
+    {
+        diamondText.text = collectedDiamond.ToString();
+        diamondProgress.value = ((float)collectedDiamond / GameManager.Instance.maxStackLimit);
     }
 
     private void FinishLine_OnFinishLine()
@@ -38,18 +48,21 @@ public class InGameScreen : ScreenBase
         shouldUpdateProgressBar = false;
         StopAllCoroutines();
         progressBar.value = 1;
+        diamondProgress.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
         TapToPlayScreen.OnTapToPlay -= OnLevelStart;
         FinishLine.OnFinishLine -= FinishLine_OnFinishLine;
+        GameManager.Instance.OnCollectedDiamondChange -= Instance_OnCollectedDiamondChange;
     }
 
     private void OnLevelStart()
     {
         levelUI.UpdateLevelUI(GameManager.Instance.CurrentLevel);
         shouldUpdateProgressBar = true;
+        diamondProgress.gameObject.SetActive(true);
         Invoke(nameof(UpgradeProgressBarWrapper), 0.025f);
     }
 
