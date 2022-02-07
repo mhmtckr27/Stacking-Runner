@@ -74,13 +74,21 @@ public class PlayerController : MonoBehaviour
     private void OnMovementInput(float moveAmount)
     {
         Vector3 newPos = ValidateMovementInput(moveAmount);
-        transform.position = newPos;
+        transform.position = newPos;        
     }
 
     private Vector3 ValidateMovementInput(float moveAmount)
     {
         Vector3 newPos = transform.position;
-        newPos.x += moveAmount;
+
+        if(moveAmount > 0)
+        {
+            newPos.x += Mathf.Lerp(0, currentPlatformCollider.bounds.size.x, moveAmount / (Screen.width / 2));
+        }
+        else
+        {
+            newPos.x += Mathf.Lerp(0, -currentPlatformCollider.bounds.size.x, -moveAmount / (Screen.width / 2));
+        }
 
         return currentPlatformCollider.ClosestPoint(newPos);
     }

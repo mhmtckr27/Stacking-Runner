@@ -137,7 +137,7 @@ public class InputManager : MonoBehaviour
 
     void OnSwipe(float moveAmount)
     {
-        OnMovementInput?.Invoke(moveAmount * Time.deltaTime * 0.2f);
+        OnMovementInput?.Invoke(moveAmount);
     }
     public void EnableInput(bool enable)
     {

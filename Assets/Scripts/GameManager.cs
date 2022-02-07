@@ -113,7 +113,6 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        CurrentLevel = (level > SceneManager.sceneCountInBuildSettings) ? 1 : level;
         collectedDiamondThisLevel = 0;
         PlayerController.Instance.transform.position = Vector3.zero;
         SpawnPlatforms();
@@ -145,6 +144,7 @@ public class GameManager : MonoBehaviour
 
     private void LevelEndScreen_OnTapToContinue()
     {
+        CurrentLevel++;
         int sceneToLoad = (SceneManager.GetActiveScene().buildIndex + 1) == SceneManager.sceneCountInBuildSettings ? 1 : (SceneManager.GetActiveScene().buildIndex + 1);
         SceneManager.LoadSceneAsync(sceneToLoad);
     }
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
 
         Instantiate(spawnablePrefabs["NonCollidingPlatform"], new Vector3(0, 0, -1 * platformCollider.size.z), Quaternion.identity);
 
-        int platformCount = (platformCounts.Count > CurrentLevel) ? platformCounts[CurrentLevel] : 1; 
+        int platformCount = platformCounts[SceneManager.GetActiveScene().buildIndex]; 
 
         for(int i = 0; i < platformCount; i++)
         {
@@ -258,9 +258,8 @@ public class GameManager : MonoBehaviour
         float rowStartPos = currentLevelPlatforms[1].GetComponentInChildren<BoxCollider>().bounds.min.z + 0.25f;
         float columnEndPos = currentLevelPlatforms[currentLevelPlatforms.Count - 2].GetComponentInChildren<BoxCollider>().bounds.max.x - 0.25f;
         float rowEndPos = currentLevelPlatforms[currentLevelPlatforms.Count - 2].GetComponentInChildren<BoxCollider>().bounds.max.z - 0.25f;
-
-        int rowCount = jSONObject.list[CurrentLevel].count;
-        int columnCount = jSONObject.list[CurrentLevel][0].count;
+        int rowCount = jSONObject.list[SceneManager.GetActiveScene().buildIndex].count;
+        int columnCount = jSONObject.list[SceneManager.GetActiveScene().buildIndex][0].count;
 
         int[,] jsonMatrix = new int[rowCount, columnCount];
 
@@ -268,7 +267,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < columnCount; j++)
             {
-                jsonMatrix[i, j] = jSONObject.list[CurrentLevel][i][j].intValue;
+                jsonMatrix[i, j] = jSONObject.list[SceneManager.GetActiveScene().buildIndex][i][j].intValue;
             }
         }
 
@@ -276,7 +275,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < columnCount; j++)
             {
-                if(jsonMatrix[i, j] == -1)
+                if(jsonMatrix[i, j] == 0)
                 {
                     continue;
                 }

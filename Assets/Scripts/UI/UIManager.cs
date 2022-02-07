@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private LevelUIData achievedLevelUIData;
     [SerializeField] private LevelUIData currentLevelUIData;
     [SerializeField] private TextMeshProUGUI goldAmountText;
+    [SerializeField] private Text fpsText;
     [SerializeField] private TapToPlayScreen tapToPlayScreen;
     [SerializeField] private InGameScreen inGameScreen;
     [SerializeField] private LevelEndScreen levelEndScreen;

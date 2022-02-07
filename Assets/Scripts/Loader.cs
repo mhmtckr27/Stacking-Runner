@@ -26,6 +26,6 @@ public class Loader : MonoBehaviour
         }
         loadingBar.value = 1;
 
-        SceneManager.LoadSceneAsync(GameManager.Instance.CurrentLevel);
+        SceneManager.LoadSceneAsync(GameManager.Instance.CurrentLevel % 2 == 0 ? 2 : 1);
     }
 }

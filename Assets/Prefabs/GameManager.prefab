@@ -64,7 +64,7 @@ MonoBehaviour:
     Price: 1000
   - UpgradeAmount: 25
     Price: 1500
-  platformCounts: 010000000400000002000000
+  platformCounts: 01000000060000000a000000
   prefabNames:
   - Platform
   - NonCollidingPlatform
@@ -81,10 +81,9 @@ MonoBehaviour:
   - {fileID: 6837109319622079524, guid: ed2aa5fec6fe4924e9bc3ea5f12eb754, type: 3}
   audioSource: {fileID: 1009423859}
   upgradeSound: {fileID: 8300000, guid: bc4d3bbaddd2e1045a092832d60dd890, type: 3}
-  maxStackLimit: 3
+  maxStackLimit: 100
   levelStartPointZ: 0
   levelEndPointZ: 0
-  collectedGoldThisLevel: 4567
 --- !u!82 &1009423859
 AudioSource:
   m_ObjectHideFlags: 0

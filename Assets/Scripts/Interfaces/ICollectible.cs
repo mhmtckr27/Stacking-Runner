@@ -10,6 +10,7 @@ public interface ICollectible
 
 public enum CollectibleType
 {
+    None,
     Diamond,
     Gold,
     Obstacle

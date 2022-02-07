@@ -13,6 +13,7 @@ public class Diamond : BaseCollectible
         base.GetCollected();
         Debug.Log(name + " : I am collected!");
         anim.SetTrigger("OnCollected");
+        Vibration.Vibrate(5);
         //Destroy(gameObject);
     }
 

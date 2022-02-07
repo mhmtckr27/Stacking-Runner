@@ -184,10 +184,6 @@ PrefabInstance:
       value: DiamondBurst
       objectReference: {fileID: 0}
     - target: {fileID: 6336558437735108529, guid: 085c0ab198d8a6642830f9293bb9f233, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6336558437735108529, guid: 085c0ab198d8a6642830f9293bb9f233, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -234,18 +230,6 @@ PrefabInstance:
     - target: {fileID: 6336558437735108532, guid: 085c0ab198d8a6642830f9293bb9f233, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6336558437735108535, guid: 085c0ab198d8a6642830f9293bb9f233, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6336558437735108535, guid: 085c0ab198d8a6642830f9293bb9f233, type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6336558437735108535, guid: 085c0ab198d8a6642830f9293bb9f233, type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 085c0ab198d8a6642830f9293bb9f233, type: 3}
