@@ -1188,6 +1188,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5334842886811600151, guid: dfc85a75dbcef724a9849bbfa9511e98, type: 3}
+      propertyPath: swipeThreshold
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5334842886811600152, guid: dfc85a75dbcef724a9849bbfa9511e98, type: 3}
       propertyPath: m_Name
       value: Player

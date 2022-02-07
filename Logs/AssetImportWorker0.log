@@ -272,3 +272,68 @@ System memory in use after: 72.2 MB.
 Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 3201.
 Total: 2.239200 ms (FindLiveObjects: 0.254100 ms CreateObjectMapping: 0.124200 ms MarkObjects: 1.848900 ms  DeleteObjects: 0.011300 ms)
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.200808 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.52 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.388 seconds
+Platform modules already initialized, skipping
+OnLevelWasLoaded was found on UIManager
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+OnLevelWasLoaded was found on GameManager
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+Switching build target platform(5) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(524288) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2618 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 122.5 MB.
+System memory in use after: 122.7 MB.
+
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 3204.
+Total: 7.368600 ms (FindLiveObjects: 0.687900 ms CreateObjectMapping: 0.396200 ms MarkObjects: 6.228700 ms  DeleteObjects: 0.052600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 3.94 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 12 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 72.0 MB.
+System memory in use after: 72.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 3204.
+Total: 3.136600 ms (FindLiveObjects: 0.333400 ms CreateObjectMapping: 0.166300 ms MarkObjects: 2.616000 ms  DeleteObjects: 0.019700 ms)
+
+========================================================================
+Received Prepare
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 2.56 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 12 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 72.0 MB.
+System memory in use after: 72.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 3204.
+Total: 2.201600 ms (FindLiveObjects: 0.262300 ms CreateObjectMapping: 0.146100 ms MarkObjects: 1.780600 ms  DeleteObjects: 0.011600 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 693.543087 seconds.
+  path: Assets/BaseScene/LightingData.asset
+  artifactKey: Guid(227dd13dcbccd8f47be387a7381466b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BaseScene/LightingData.asset using Guid(227dd13dcbccd8f47be387a7381466b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d57ee0aa4fddeb065149fe1dc5e0565') in 0.259323 seconds
+  Import took 0.572515 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
