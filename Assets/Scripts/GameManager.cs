@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
 
         levelStartPointZ = currentLevelPlatforms[0].boxCollider.bounds.min.z;
         levelEndPointZ = currentLevelPlatforms[currentLevelPlatforms.Count - 1].boxCollider.bounds.max.z;
-        Instantiate(spawnablePrefabs["NonCollidingPlatform"], new Vector3(0, 0, levelEndPointZ), Quaternion.identity);
+        Instantiate(spawnablePrefabs["Platform"], new Vector3(0, 0, levelEndPointZ), Quaternion.identity);
         Vector3 finishLinePos = currentLevelPlatforms[currentLevelPlatforms.Count - 1].transform.position;
         finishLinePos.z = levelEndPointZ;
         Instantiate(spawnablePrefabs["FinishLine"], finishLinePos, Quaternion.identity);

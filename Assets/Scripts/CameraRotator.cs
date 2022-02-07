@@ -26,6 +26,7 @@ public class CameraRotator : MonoBehaviour
 
     private void Instance_OnTapToContinue()
     {
+        StopAllCoroutines();
         transform.localPosition = followPos;
         transform.eulerAngles = followRotation;
     }
